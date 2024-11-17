@@ -2,9 +2,10 @@
 import connectDB from "@/lib/database";
 import UserModel from "@/models/user.model";
 import bcrypt from 'bcryptjs';
-import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
+// import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
 import otpGenerator from 'otp-generator';
 import { signUpSchema } from "@/schema/signUpSchema";
+import { sendVerificationEmail } from "@/helpers/mailer";
 
 export async function POST(request: Request) {
     await connectDB();
