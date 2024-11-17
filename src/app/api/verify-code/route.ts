@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import connectDB from "@/lib/database";
 import UserModel from "@/models/user.model";
 import { verifySchema } from "@/schema/verifySchema";
