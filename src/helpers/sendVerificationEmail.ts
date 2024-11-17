@@ -1,6 +1,6 @@
 import { resend } from "@/lib/resend";
-import VerificationEmail from "../../email/VerificationEmail";
 import { ApiResponse } from "@/types/apiResponse";
+import { VerificationEmail } from "../../email/VerificationEmail";
 
 export async function sendVerificationEmail(
     email:string,
@@ -8,12 +8,16 @@ export async function sendVerificationEmail(
     verifyCode:string
 ) : Promise<ApiResponse> {
     try {
-        await resend.emails.send({
-            from: 'onboarding@resend.dev',
+        const {data,error} = await resend.emails.send({
+            from: 'ashmessage.example.com',
             to: email,
             subject: 'Anonymous Message | Verification Code',
             react: VerificationEmail({username, otp:verifyCode}),
         });
+        if(error){
+            console.log("Error --> ", error);
+        }
+        console.log("Data --> ", data);
         return{
             success:true,
             message:"Email sent successfully"

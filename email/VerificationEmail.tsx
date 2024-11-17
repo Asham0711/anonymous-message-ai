@@ -9,12 +9,15 @@ import {
   Text,
 } from '@react-email/components';
 
-interface VerificationEmailProps {
+interface EmailTemplateProps {
   username: string;
   otp: string;
 }
 
-export default function VerificationEmail({ username, otp }: VerificationEmailProps) {
+export const VerificationEmail : React.FC<Readonly<EmailTemplateProps>> = ({
+  username,
+  otp
+}) => {
   return (
     <Html lang="en" dir="ltr">
       <Head>

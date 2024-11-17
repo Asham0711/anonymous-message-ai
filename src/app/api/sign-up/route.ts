@@ -1,14 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import connectDB from "@/lib/database";
 import UserModel from "@/models/user.model";
 import bcrypt from 'bcryptjs';
 import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
 import otpGenerator from 'otp-generator';
+import { signUpSchema } from "@/schema/signUpSchema";
 
 export async function POST(request: Request) {
     await connectDB();
     try {
-        //extracting data from request body
-        const {username, email, password} = await request.json();
+        const body = await request.json();
+        const parsedData = signUpSchema.parse(body);
+        const { username, email, password } = parsedData;
+
 
         //finding account if exist and verifed
         const verifiedUser = await UserModel.findOne({
@@ -68,6 +72,7 @@ export async function POST(request: Request) {
 
         //sending otp for verification purpose
         const emailResponse = await sendVerificationEmail(email,username,verifyCode);
+        console.log("Email is sending to -->", email)
         //if there is error while sending mail
         if(!emailResponse.success){
             return Response.json(
@@ -78,17 +83,31 @@ export async function POST(request: Request) {
                 {status:401}
             );
         }
+        console.log("Email -> ", emailResponse);
+
 
         return Response.json(
             {
-                success:false,
+                success:true,
                 message:"User registered succesfully... Please verify your account"
             },
             {status:200}
         )
 
-    } catch (error) {
+    } catch (error:any) {
         console.log("Error while Signing up --> ", error);
+
+        if (error.name === "ZodError") {
+            return Response.json(
+                {
+                    success: false,
+                    message: "Validation error",
+                    errors: error.errors, // Detailed validation errors
+                },
+                { status: 400 }
+            );
+        }
+
         return Response.json(
             {
                 success:false,
