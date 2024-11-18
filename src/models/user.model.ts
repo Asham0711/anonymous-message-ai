@@ -1,12 +1,12 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface Message extends Document{
-    context: string;
+    content: string;
     createdAt: Date;
 }
 
 const MessageSchema : Schema<Message> = new mongoose.Schema({
-    context:{
+    content:{
         type:String,
         required:true
     },
