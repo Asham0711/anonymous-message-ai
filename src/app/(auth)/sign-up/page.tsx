@@ -127,7 +127,6 @@ const SignupPage = () => {
                                 <FormItem>
                                     <FormLabel>Email</FormLabel>
                                     <Input {...field} name="email" placeholder="Enter your email" />
-                                    <p className='text-muted text-gray-400 text-sm'>We will send you a verification code</p>
                                     <FormMessage />
                                 </FormItem>
                             )}
