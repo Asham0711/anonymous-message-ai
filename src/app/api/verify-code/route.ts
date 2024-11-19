@@ -37,13 +37,8 @@ export async function POST(request: Request) {
 
     if (isCodeValid && isCodeNotExpired) {
       // Update the user's verification status
-      await UserModel.updateOne(
-        { username: decodedUsername },
-        {
-          $set: { isVerified: true },
-          $unset: { verifyCode: "", verifyCodeExpiry: "" }, // Remove fields
-        }
-      );
+      user.isVerified = true;
+      await user.save();
       return Response.json(
         { success: true, message: 'Account verified successfully' },
         { status: 200 }
