@@ -14,7 +14,7 @@ export async function sendVerificationEmail(
                 user: process.env.MAIL_USER,
                 pass: process.env.MAIL_PASS
             },
-            secure:false,
+            secure:true,
         });
 
 
