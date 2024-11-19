@@ -17,6 +17,10 @@ export async function sendVerificationEmail(
             secure:true,
         });
 
+        console.log("MAIL HOST: ",process.env.MAIL_HOST)
+        console.log("MAIL USER: ",process.env.MAIL_USER)
+        console.log("MAIL PASS: ",process.env.MAIL_PASS)
+
 
         const mailOptions = {
             from: `"AshMessage | Md Asham Imad" <${process.env.MAIL_USER}>`, // sender address
