@@ -4,7 +4,10 @@ import connectDB from '@/lib/database';
 import { User } from 'next-auth';
 import { AuthOptions } from '../../auth/[...nextauth]/options';
 
-export async function DELETE({params}: {params: Promise<{ messageid: string }>}){
+export async function DELETE(
+  request: Request,
+  {params}: {params: Promise<{ messageid: string }>}
+){
   const messageid = (await params).messageid;
   await connectDB();
   const session = await getServerSession(AuthOptions);
