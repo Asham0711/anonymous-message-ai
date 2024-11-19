@@ -11,8 +11,8 @@ export async function DELETE(
   const messageId = params.messageid;
   await connectDB();
   const session = await getServerSession(AuthOptions);
-  const _user: User = session?.user;
-  if (!session || !_user) {
+  const user: User = session?.user;
+  if (!session || !user) {
     return Response.json(
       { success: false, message: 'Not authenticated' },
       { status: 401 }
@@ -21,7 +21,7 @@ export async function DELETE(
 
   try {
     const updateResult = await UserModel.updateOne(
-      { _id: _user._id },
+      { _id: user._id },
       { $pull: { messages: { _id: messageId } } }
     );
 
